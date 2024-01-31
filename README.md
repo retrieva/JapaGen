@@ -31,6 +31,7 @@ task_conf = {
 上記のConfigファイルから以下のようにプロンプトを作成し、疑似データを生成する。
 ```python
 label = "0"
+
 # 1文入力タスクの場合
 prompt = [
      {"role": "system", "content": task_conf['content']},
