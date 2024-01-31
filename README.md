@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/license-Apache_2.0-green)
+![](https://img.shields.io/badge/License-Apache_2.0-green)
 # 日本語タスクにおけるLLMを用いた疑似学習データ生成の検討
 NLP2024で発表する「日本語タスクにおけるLLMを用いた疑似学習データ生成の検討」で用いたプロンプトを格納しているリポジトリです。
 
