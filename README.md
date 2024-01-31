@@ -38,8 +38,7 @@ prompt = [
 ]
 response = openai.ChatCompletion.create(messages=prompt)
 generated_text = response['choices'][0]['message']['content']
-```
-```python
+
 # 2文入力タスクの場合
 prompt1 = [
      {"role": "system", "content": task_conf['content']},
