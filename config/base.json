@@ -1,0 +1,16 @@
+{
+    "task_name": "{task name}",
+    "content": "{setting, task description and rules}",
+    "first instruction": "{instruction for a first sencence is required if two-sentences task",
+    "labels": {
+      "0": {
+        "instruction": "{simple instruction to be labeld 0}:"
+      },
+      "1": {
+        "instruction": "{simple instruction to be labeld 1}:"
+      },
+      "2": {
+        "instruction": "{simple instruction to be labeld 2}:"
+      }
+    }
+  }
