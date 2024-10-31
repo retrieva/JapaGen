@@ -1,49 +1,40 @@
 ![](https://img.shields.io/badge/license-Apache_2.0-green)
 ---
-# JAPAGEN: Efficient Few/Zero-shot Learning via Japanese Training Dataset Generation with LLM
+# 日本語タスクにおけるLLMを用いた疑似学習データ生成の検討
+NLP2024で発表する「日本語タスクにおけるLLMを用いた疑似学習データ生成の検討」で用いたプロンプトを格納しているリポジトリです。
 
-This repository contains the prompts used in "JAPAGEN: Efficient Few/Zero-shot Learning via Japanese Training Dataset Generation with LLM".
-
-The Japanese README is [here](./README_ja.md).
-
-## 1. Prompt Format
-
-We assume the following format for the prompt, which is used as the argument `messages` of `openai.ChatCompletion.create()` to use OpenAI's GPT-3.5-Turbo API.
-
+## 1. 前提
+本研究では、LLMにOpneAIのGPT-3.5-TurboのAPIを使用するため、プロンプトは`openai.ChatCompletion.create()`の引数`messages`に入力する以下の形式を想定している。
 ```python
 prompt = [
-     {"role": "system", "content": "{the description of the task}"},
-     {"role": "user", "content": "{the instruction for generating the pseudo data}"}
+     {"role": "system", "content": "{タスクの説明}"},
+     {"role": "user", "content": "{疑似データ生成のためのインストラクション}"}
 ]
 ```
 
-## 2. The details of the prompts
-### 2.1. Config files for prompt creation
-
-We create prompts based on the Config files for each task. The structure of the Config file is as follows for all tasks.
-
+## 2. プロンプト
+### 2.1. プロンプト作成のためのConfigファイル
+各タスクのConfigファイルをもとにプロンプトを作成する。全タスクを通してConfigファイルの構造は以下のようになっている。
 ```python
 task_conf = {
-    "task_name": "{task name}",
-    "content": "{the description of the task}",
-    "first instruction": "{the instruction for generating the first sentence (for 2-sentence input tasks)}",
+    "task_name": "{タスク名}",
+    "content": "{タスクの説明や設定など}",
+    "first instruction": "{1文目生成のためのインストラクション(2文入力タスクの場合)}",
     "labels": {
       "0": {
-        "instruction": "{Instruction for generating a statement corresponding to label 0}:"
+        "instruction": "{ラベル0に対応する文を生成するためのインストラクション}:"
       },
       "1": {
-        "instruction": "{Instruction for generating a statement corresponding to label 1}:"
+        "instruction": "{ラベル1に対応する文を生成するためのインストラクション}:"
       }
     }
   }
 ```
-
-We create prompts as follows from the above Config file and generate pseudo data.
-
+上記のConfigファイルから以下のようにプロンプトを作成し、疑似データを生成する。
 ```python
 label = "0"
 
-# the case of 1-sentence input tasks
+# 1文入力タスクの場合
 prompt = [
      {"role": "system", "content": task_conf['content']},
      {"role": "user", "content": task_conf['labels'][label]['instruction']}
@@ -51,7 +42,7 @@ prompt = [
 response = openai.ChatCompletion.create(messages=prompt)
 generated_text = response['choices'][0]['message']['content']
 
-# the case of 2-sentences input tasks
+# 2文入力タスクの場合
 prompt1 = [
      {"role": "system", "content": task_conf['content']},
      {"role": "user", "content": task_conf['first instruction']}
@@ -68,7 +59,7 @@ response2 = openai.ChatCompletion.create(messages=prompt2)
 generated_text2 = response2['choices'][0]['message']['content']
 ```
 
-### 2.2. Config for each task
+### 2.2. 各タスクのConfig
 #### MARC-ja
 ```json
 {
@@ -267,12 +258,4 @@ generated_text2 = response2['choices'][0]['message']['content']
       }
     }
   }
-```
-
-## 3. Citation
-
-If you use this repository, please cite the following paper:
-
-```
-TBC
 ```
